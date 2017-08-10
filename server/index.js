@@ -37,42 +37,44 @@ app.use(express.static(__dirname + '/../react-client/dist'));
 //   });
 // });
 
-// var testGameData = [
-//   {
-//     username: 'weiyilee17',
-//     name: 'Age of Empires 2',
-//     imageUrl: 'http://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/221380/37e9da3f1174891fe38f8fb0206acda8b6bfc729.jpg',
-//     totalPlayedHours: 553
-//   },
-//   {
-//     username: 'weiyilee17',    
-//     name: 'Company of Heros',
-//     imageUrl: 'http://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/228200/87aa009e93d5aa56a55d0e9056708d018ddd6483.jpg',
-//     totalPlayedHours: 58
-//   },
-//   {
-//     username: 'weiyilee17',    
-//     name: 'The Binding of Isaac: Rebirth',
-//     imageUrl: 'http://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/250900/c7a76988c53e7f3a3aa1cf224aaf4dbd067ebbf9.jpg',
-//     totalPlayedHours: 413
-//   },
-//   {
-//     username: 'weiyilee17',    
-//     name: 'Rome: Total War',
-//     imageUrl: 'http://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/4760/134817933edf4f8d0665d456889c0315c416fff2.jpg',
-//     totalPlayedHours: 59
-//   },
-//   {
-//     username: 'weiyilee17',    
-//     name: 'Hacknet',
-//     imageUrl: 'http://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/365450/50479f0bfe5a552132a0fc2668640b2e6a737398.jpg',
-//     totalPlayedHours: 20
-//   }
-// ];
+var testGameData = [
+  {
+    username: 'weiyilee17',
+    name: 'Age of Empires 2',
+    imageUrl: 'http://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/221380/37e9da3f1174891fe38f8fb0206acda8b6bfc729.jpg',
+    totalPlayedHours: 553
+  },
+  {
+    username: 'weiyilee17',    
+    name: 'Company of Heros',
+    imageUrl: 'http://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/228200/87aa009e93d5aa56a55d0e9056708d018ddd6483.jpg',
+    totalPlayedHours: 58
+  },
+  {
+    username: 'weiyilee17',    
+    name: 'The Binding of Isaac: Rebirth',
+    imageUrl: 'http://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/250900/c7a76988c53e7f3a3aa1cf224aaf4dbd067ebbf9.jpg',
+    totalPlayedHours: 413
+  },
+  {
+    username: 'weiyilee17',    
+    name: 'Rome: Total War',
+    imageUrl: 'http://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/4760/134817933edf4f8d0665d456889c0315c416fff2.jpg',
+    totalPlayedHours: 59
+  },
+  {
+    username: 'weiyilee17',    
+    name: 'Hacknet',
+    imageUrl: 'http://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/365450/50479f0bfe5a552132a0fc2668640b2e6a737398.jpg',
+    totalPlayedHours: 20
+  }
+];
 
 
 
 app.get('/games', function(req, res) {
+
+  // res.status(200).send(testGameData);
 
   var gameInfo = [];
 
@@ -84,7 +86,7 @@ app.get('/games', function(req, res) {
   // convert custom steam handler to 64 bit id
   var username = req.query.username;
   console.log(username);
-
+  
   steam.convertVanity(username, function(err, usernameIn64bit) {
     if (err) {
       console.log('Could not get convert' + username);
@@ -129,54 +131,12 @@ app.get('/games', function(req, res) {
 
         gameInfo.push(eachGameInfo);
       }
+      
+      var i = 0;
 
-      res.status(200).send(gameInfo);
-
-      // console.log('game info at the end of app.get:', gameInfo);
-
-      // for (var i = 0; i < gameInfo.length; i++) {
-
-      //   var outerGameInfo = gameInfo[i];
-
-      //   console.log('outerGameInfo at beginning of for loop: ', outerGameInfo);
-
-      //   saveGameInfo(gameInfo[i], save(gameInfo[i], function(err, bool) {
-      //     if (err) {
-      //       console.log('err in save');
-      //       res.sendStatus(500);
-      //     } else {
-
-      //       console.log('game info :', outerGameInfo);
-
-      //       // Game.find({key: value}) returns an array of objects that match the condition
-      //       if (bool.length) {  // if found
-      //         // do nothing, no need to save duplicate data
-      //         // in the future can update so the data is dynamic
-
-      //       // Game.find({key: value}) returns an empty array if not found
-      //       } else {  // if not found
-      //         console.log('game Info [i]: ', outerGameInfo);
-      //         var game = new Game(outerGameInfo);
-      //         game.save();
-      //       }
-      //     }
-
-      //     })
-      //   );
-
-      // }
-
-      /*
         gameInfo.forEach(function(game){
-
-          // var outestGameInfo = gameInfo[i];
-          // console.log('outestGameInfo: ', outestGameInfo);
           
           save(game, function(err, bool) {
-
-            // var outerGameInfo = game;
-
-            // console.log('outer game info at beginning:', outerGameInfo)
 
             if(err) {
               console.log('err in save');
@@ -192,41 +152,39 @@ app.get('/games', function(req, res) {
                 
                 console.log('outer gameinfo in else: ', game);
                 var gameSave = new Game(game);
-                saveGameInfo(function() {
-                  gameSave.save();
-                });
+                gameSave.save()
+                  .then( function() {
+                    i++;
+                    if (i === 6) {
+                      // get data from database
+                      select(username, function(err, games) {
+                        if(err) {
+                          console.log('error in server: ', err);
+                          res.sendStatus(500);
+                        } else {
+                          console.log("games in select: ", games);
+                          gameInfo = games;
+                          res.status(200).send(gameInfo);
+                        }
+                      });
+                      
+                    }
+
+                  }
+                );
               }
             }
 
           });
         });
 
-
-      // get data from database
-      select(username, function(err, games) {
-        if(err) {
-          console.log('error in server: ', err);
-          res.sendStatus(500);
-        } else {
-          console.log("games in select: ", games);
-          gameInfo = games;
-          res.status(200).send(gameInfo);
-        }
-      });
-
-      */
-
     });
-
+    
   });
 
-
+  
 
 });
-
-var saveGameInfo = function(callback) {
-  callback();
-}
 
 app.listen(3000, function() {
   console.log('listening on port 3000!');

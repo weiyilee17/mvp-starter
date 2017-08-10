@@ -19,26 +19,45 @@ Once the project moves into development, the press release can be used as a touc
 ## Heading ##
   > Name the product in a way the reader (i.e. your target customers) will understand.
 
+  Steam player longest 5 games fetcher.
+
 ## Sub-Heading ##
   > Describe who the market for the product is and what benefit they get. One sentence only underneath the title.
+
+  Analyist who would like to know what games are popular on Steam.
 
 ## Summary ##
   > Give a summary of the product and the benefit. Assume the reader will not read anything else so make this paragraph good.
 
+  Enter a steam users username and it would show the 5 games s/he played the most.
+
 ## Problem ##
   > Describe the problem your product solves.
+
+  It doesn't solve anything, just for practice purpose.
 
 ## Solution ##
   > Describe how your product elegantly solves the problem.
 
+  It doesn't!
+
 ## Quote from You ##
   > A quote from a spokesperson in your company.
+
+  How are you? I'm fine, thank you, and you?
 
 ## How to Get Started ##
   > Describe how easy it is to get started.
 
+  Just type a username and press the button.
+
 ## Customer Quote ##
   > Provide a quote from a hypothetical customer that describes how they experienced the benefit.
 
+  "Why would anyone want to waste time making this? 1/10" - PS Gamer
+  "Use your time to do something meaningful! 2/10" - NGI
+
 ## Closing and Call to Action ##
   > Wrap it up and give pointers where the reader should go next.
+
+  You should go to bed! ( ˘•ω•˘ )

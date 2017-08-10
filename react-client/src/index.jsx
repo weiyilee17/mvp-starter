@@ -41,12 +41,14 @@ class App extends React.Component {
 
   }
 
-  render () {
-    return (<div>
-      <h1>Game List</h1>
-      <Search onSearch={this.search}/>
-      <List games={this.state.games}/> 
-    </div>)
+  render() {
+    return (
+      <div>
+        <h1>Game List</h1>
+        <Search onSearch={this.search}/>
+        <List games={this.state.games}/> 
+      </div>
+    )
   }
 }
 

@@ -6,7 +6,7 @@ class Search extends React.Component {
    constructor(props) {
       super(props);
       this.state = {
-         text : ''
+         text: ''
       }
 
       this.search = this.search.bind(this);
@@ -22,18 +22,22 @@ class Search extends React.Component {
 
    // this search is to correctly bind this?
    search() {
-      this.props.onSearch(this.state.text);
+      var currentTextboxText = this.state.text;
 
+      // debugger;
       // why it doesn't clean the text box?
       this.setState({
          text: ''
       });
+
+      this.props.onSearch(currentTextboxText);
+
    }
 
    render() {
       return (
          <div>
-            <input value={this.state.texts} onChange={this.textChange}/>
+            <input value={this.state.text} onChange={this.textChange}/>
             <button onClick={this.search}>Search for his/her games!</button>
          </div>
       );
